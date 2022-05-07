@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+
 @RestController
 @RequestMapping("/email")
 public class EmailController {
@@ -16,13 +18,13 @@ public class EmailController {
     private static final Logger LOG = LoggerFactory.getLogger(EmailController.class);
 
     @Autowired
-    DefaultEmailService emailService;
+    DefaultEmailService smtpMailSender;
 
-    @GetMapping(value = "/email")
-    public @ResponseBody ResponseEntity sendSimpleEmail() {
+    @RequestMapping(path = "/api/mail/send")
+    public @ResponseBody ResponseEntity sendSimpleEmail() throws MessagingException {
 
         try {
-            emailService.sendSimpleEmail("neiranovalicc20@gmail.com", "Welcome", "This is a welcome email for your!!");
+            smtpMailSender.sendMail("neiranovalicc20@gmail.com", "testmail", "hello!");
         } catch (MailException mailException) {
             LOG.error("Error while sending out email..{}", mailException.getStackTrace());
             return new ResponseEntity<>("Unable to send email", HttpStatus.INTERNAL_SERVER_ERROR);
