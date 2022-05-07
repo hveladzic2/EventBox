@@ -21,6 +21,6 @@ public class TypeDTO {
     private Double price;
 
     @NotNull
-    private Boolean pdfExport;
+    private Boolean eTicket;
 
 }

@@ -54,14 +54,14 @@ public class TypeService {
         typeDTO.setTypeID(type.getTypeID());
         typeDTO.setSeat(type.getSeat());
         typeDTO.setPrice(type.getPrice());
-        typeDTO.setPdfExport(type.getPdfExport());
+        typeDTO.setETicket(type.getETicket());
         return typeDTO;
     }
 
     private Type mapToEntity(final TypeDTO typeDTO, final Type type) {
         type.setSeat(typeDTO.getSeat());
         type.setPrice(typeDTO.getPrice());
-        type.setPdfExport(typeDTO.getPdfExport());
+        type.setETicket(typeDTO.getETicket());
         return type;
     }
 

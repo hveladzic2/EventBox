@@ -36,7 +36,7 @@ public class Type {
     private Double price;
 
     @Column(nullable = false)
-    private Boolean pdfExport;
+    private Boolean eTicket;
 
     @OneToMany(mappedBy = "typeID")
     private Set<Ticket> typeIDTickets;
