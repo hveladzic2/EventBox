@@ -1,11 +1,15 @@
 package ba.unsa.etf.ppis.e_ticket_booking_app.service;
 
 import ba.unsa.etf.ppis.e_ticket_booking_app.domain.Concert;
+import ba.unsa.etf.ppis.e_ticket_booking_app.domain.Picture;
 import ba.unsa.etf.ppis.e_ticket_booking_app.model.ConcertDTO;
 import ba.unsa.etf.ppis.e_ticket_booking_app.repos.ConcertRepository;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import ba.unsa.etf.ppis.e_ticket_booking_app.repos.PictureRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,9 +19,12 @@ import org.springframework.web.server.ResponseStatusException;
 public class ConcertService {
 
     private final ConcertRepository concertRepository;
+    @Autowired
+    private final PictureRepository pictureRepository;
 
-    public ConcertService(final ConcertRepository concertRepository) {
+    public ConcertService(final ConcertRepository concertRepository, final PictureRepository pictureRepository) {
         this.concertRepository = concertRepository;
+        this.pictureRepository = pictureRepository;
     }
 
     public List<ConcertDTO> findAll() {
@@ -57,6 +64,7 @@ public class ConcertService {
         concertDTO.setPlace(concert.getPlace());
         concertDTO.setConcertDate(concert.getConcertDate());
         concertDTO.setNumberOfTickets(concert.getNumberOfTickets());
+        concertDTO.setConcertPicture(concert.getConcertPicture() == null ? null : concert.getConcertPicture().getId());
         return concertDTO;
     }
 
@@ -66,6 +74,11 @@ public class ConcertService {
         concert.setPlace(concertDTO.getPlace());
         concert.setConcertDate(concertDTO.getConcertDate());
         concert.setNumberOfTickets(concertDTO.getNumberOfTickets());
+        if (concertDTO.getConcertPicture() != null && (concert.getConcertPicture() == null || !concert.getConcertPicture().getId().equals(concertDTO.getConcertPicture()))) {
+            final Picture recipePicture = pictureRepository.findById(concertDTO.getConcertPicture())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "recipePicture not found"));
+            concert.setConcertPicture(recipePicture);
+        }
         return concert;
     }
 

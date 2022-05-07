@@ -4,12 +4,8 @@ import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.Set;
 import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -44,6 +40,10 @@ public class Concert {
 
     @Column(nullable = false)
     private Integer numberOfTickets;
+
+    @OneToOne
+    @JoinColumn(name = "concert_picture_id", nullable = false)
+    private Picture concertPicture;
 
     @OneToMany(mappedBy = "concertID")
     private Set<Ticket> concertIDTickets;
