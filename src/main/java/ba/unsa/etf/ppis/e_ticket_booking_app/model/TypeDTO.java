@@ -20,4 +20,7 @@ public class TypeDTO {
     @NotNull
     private Double price;
 
+    @NotNull
+    private Boolean pdfExport;
+
 }

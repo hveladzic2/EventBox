@@ -35,6 +35,9 @@ public class Type {
     @Column(nullable = false)
     private Double price;
 
+    @Column(nullable = false)
+    private Boolean pdfExport;
+
     @OneToMany(mappedBy = "typeID")
     private Set<Ticket> typeIDTickets;
 
