@@ -1,13 +1,17 @@
 package ba.unsa.etf.ppis.e_ticket_booking_app.service;
 
 import ba.unsa.etf.ppis.e_ticket_booking_app.domain.Booking;
+import ba.unsa.etf.ppis.e_ticket_booking_app.domain.File;
 import ba.unsa.etf.ppis.e_ticket_booking_app.domain.User;
 import ba.unsa.etf.ppis.e_ticket_booking_app.model.BookingDTO;
 import ba.unsa.etf.ppis.e_ticket_booking_app.repos.BookingRepository;
+import ba.unsa.etf.ppis.e_ticket_booking_app.repos.FileRepository;
 import ba.unsa.etf.ppis.e_ticket_booking_app.repos.UserRepository;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,11 +22,14 @@ public class BookingService {
 
     private final BookingRepository bookingRepository;
     private final UserRepository userRepository;
+    @Autowired
+    private final FileRepository fileRepository;
 
     public BookingService(final BookingRepository bookingRepository,
-            final UserRepository userRepository) {
+            final UserRepository userRepository, final FileRepository fileRepository) {
         this.bookingRepository = bookingRepository;
         this.userRepository = userRepository;
+        this.fileRepository = fileRepository;
     }
 
     public List<BookingDTO> findAll() {
@@ -64,6 +71,7 @@ public class BookingService {
         bookingDTO.setTotalNumber(booking.getTotalNumber());
         bookingDTO.setTotalPrice(booking.getTotalPrice());
         bookingDTO.setUserID(booking.getUserID() == null ? null : booking.getUserID().getUserID());
+        bookingDTO.setBookingFile(booking.getBookingFile() == null ? null : booking.getBookingFile().getId());
         return bookingDTO;
     }
 
@@ -78,6 +86,11 @@ public class BookingService {
             final User userID = userRepository.findById(bookingDTO.getUserID())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "userID not found"));
             booking.setUserID(userID);
+        }
+        if (bookingDTO.getBookingFile() != null && (booking.getBookingFile() == null || !booking.getBookingFile().getId().equals(bookingDTO.getBookingFile()))) {
+            final File bookingFile = fileRepository.findById(bookingDTO.getBookingFile())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "bookingFile not found"));
+            booking.setBookingFile(bookingFile);
         }
         return booking;
     }

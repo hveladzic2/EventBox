@@ -27,7 +27,7 @@ public class ConcertDTO {
     private String place;
 
     @NotNull
-    private UUID concertPicture;
+    private UUID concertFile;
 
     @NotNull
     private LocalDateTime concertDate;

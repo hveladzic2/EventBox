@@ -42,8 +42,8 @@ public class Concert {
     private Integer numberOfTickets;
 
     @OneToOne
-    @JoinColumn(name = "concert_picture_id", nullable = false)
-    private Picture concertPicture;
+    @JoinColumn(name = "concert_file_id", nullable = false)
+    private File concertFile;
 
     @OneToMany(mappedBy = "concertID")
     private Set<Ticket> concertIDTickets;

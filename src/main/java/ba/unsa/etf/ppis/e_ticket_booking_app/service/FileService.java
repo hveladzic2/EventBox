@@ -4,16 +4,15 @@ package ba.unsa.etf.ppis.e_ticket_booking_app.service;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
-import ba.unsa.etf.ppis.e_ticket_booking_app.domain.Picture;
-import ba.unsa.etf.ppis.e_ticket_booking_app.model.PictureDTO;
-import ba.unsa.etf.ppis.e_ticket_booking_app.repos.PictureRepository;
+import ba.unsa.etf.ppis.e_ticket_booking_app.domain.File;
+import ba.unsa.etf.ppis.e_ticket_booking_app.model.FileDTO;
+import ba.unsa.etf.ppis.e_ticket_booking_app.repos.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -22,65 +21,65 @@ import org.springframework.web.server.ResponseStatusException;
 
 
 @Service
-public class PictureService {
+public class FileService {
 
     @Autowired
-    private final PictureRepository pictureRepository;
+    private final FileRepository fileRepository;
 
-    public PictureService(final PictureRepository pictureRepository) {
-        this.pictureRepository = pictureRepository;
+    public FileService(final FileRepository fileRepository) {
+        this.fileRepository = fileRepository;
     }
 
-    public List<PictureDTO> findAll() {
-        return pictureRepository.findAll()
+    public List<FileDTO> findAll() {
+        return fileRepository.findAll()
                 .stream()
-                .map(picture -> mapToDTO(picture, new PictureDTO()))
+                .map(file -> mapToDTO(file, new FileDTO()))
                 .collect(Collectors.toList());
     }
 
-    public void update(final UUID id, final MultipartFile file) throws IOException{
-        final Picture picture = pictureRepository.findById(id)
+    public void update(final UUID id, final MultipartFile files) throws IOException{
+        final File file = fileRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        mapToEntity(file, picture);
-        pictureRepository.save(picture);
+        mapToEntity(files, file);
+        fileRepository.save(file);
     }
 
     public void delete(final UUID id) {
-        pictureRepository.deleteById(id);
+        fileRepository.deleteById(id);
     }
     public void deleteAll() {
-        pictureRepository.deleteAll();
+        fileRepository.deleteAll();
     }
 
-    public UUID create(MultipartFile file) throws IOException {
+    public UUID create(MultipartFile files) throws IOException {
 
-        /*Picture picture = new Picture(file.getOriginalFilename(), file.getContentType(),
+        /*File file = new File(file.getOriginalFilename(), file.getContentType(),
                 compressBytes(file.getBytes()));
          */
-        final Picture picture = new Picture();
-        mapToEntity(file, picture);
-        return pictureRepository.save(picture).getId();
+        final File file = new File();
+        mapToEntity(files, file);
+        return fileRepository.save(file).getId();
     }
 
-    public PictureDTO get(UUID id) throws IOException {
-        return pictureRepository.findById(id)
-                .map(picture -> mapToDTO(picture, new PictureDTO()))
+    public FileDTO get(UUID id) throws IOException {
+        return fileRepository.findById(id)
+                .map(file -> mapToDTO(file, new FileDTO()))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    private PictureDTO mapToDTO(final Picture picture, final PictureDTO pictureDTO) {
-        pictureDTO.setId(picture.getId());
-        pictureDTO.setName(picture.getName());
-        pictureDTO.setType(picture.getType());
-        pictureDTO.setPicByte(decompressBytes(picture.getPicByte()));
-        return pictureDTO;
+    private FileDTO mapToDTO(final File file, final FileDTO fileDTO) {
+        fileDTO.setId(file.getId());
+        fileDTO.setName(file.getName());
+        fileDTO.setType(file.getType());
+        fileDTO.setFileByte(decompressBytes(file.getFileByte()));
+        return fileDTO;
     }
 
-    private Picture mapToEntity(final MultipartFile file, final Picture picture) throws IOException{
-        picture.setName(file.getOriginalFilename());
-        picture.setType(file.getContentType());
-        picture.setPicByte(compressBytes(file.getBytes()));
-        return picture;
+    private File mapToEntity(final MultipartFile file, final File files) throws IOException{
+        files.setName(file.getOriginalFilename());
+        files.setType(file.getContentType());
+        files.setFileByte(compressBytes(file.getBytes()));
+        return files;
     }
 
     public static byte[] compressBytes(byte[] data) {

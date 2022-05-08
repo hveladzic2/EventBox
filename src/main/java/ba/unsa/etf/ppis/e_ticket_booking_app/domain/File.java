@@ -23,7 +23,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class Picture {
+public class File {
 
     @Id
     @Column(nullable = false, updatable = false, columnDefinition = "char(36)")
@@ -38,18 +38,18 @@ public class Picture {
     @Column(name = "type")
     private String type;
 
-    @Column(name = "picByte", length = 65555)
-    private byte[] picByte;
+    @Column(name = "fileByte", length = 65555)
+    private byte[] fileByte;
 
-    public Picture(String name, String type, byte[] picByte) {
+    public File(String name, String type, byte[] fileByte) {
         this.id = id;
         this.name = name;
         this.type = type;
-        this.picByte = picByte;
+        this.fileByte = fileByte;
     }
 
 
-    public Picture() {
+    public File() {
 
     }
 
@@ -77,28 +77,20 @@ public class Picture {
         this.type = type;
     }
 
-    public byte[] getPicByte() {
-        return picByte;
+    public byte[] getFileByte() {
+        return fileByte;
     }
 
-    public void setPicByte(byte[] picByte) {
-        this.picByte = picByte;
-    }
 
-    @OneToOne(mappedBy = "concertPicture", fetch = FetchType.LAZY)
-    private Concert concertPicture;
+    @OneToOne(mappedBy = "concertFile", fetch = FetchType.LAZY)
+    private Concert concertFile;
+
+    @OneToOne(mappedBy = "bookingFile", fetch = FetchType.LAZY)
+    private Booking bookingFile;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private OffsetDateTime dateCreated;
-
-    public Concert getConcertPicture() {
-        return concertPicture;
-    }
-
-    public void setConcertPicture(Concert concertPicture) {
-        this.concertPicture = concertPicture;
-    }
 
     @LastModifiedDate
     @Column(nullable = false)
