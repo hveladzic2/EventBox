@@ -81,5 +81,10 @@ public class ConcertService {
         }
         return concert;
     }
-
+    public List<ConcertDTO> getConcertsForUsersBooking(UUID id) {
+        return concertRepository.getConcertsForUsersBooking(id)
+                .stream()
+                .map(concert -> mapToDTO(concert, new ConcertDTO()))
+                .collect(Collectors.toList());
+    }
 }
