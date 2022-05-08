@@ -1,5 +1,6 @@
 package ba.unsa.etf.ppis.e_ticket_booking_app.rest;
 
+import ba.unsa.etf.ppis.e_ticket_booking_app.domain.Ticket;
 import ba.unsa.etf.ppis.e_ticket_booking_app.model.TicketDTO;
 import ba.unsa.etf.ppis.e_ticket_booking_app.service.TicketService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -58,5 +59,12 @@ public class TicketController {
         ticketService.delete(ticketID);
         return ResponseEntity.noContent().build();
     }
-
+    @GetMapping("/userTickets/{userID}")
+    public ResponseEntity<List<TicketDTO>> getAllEticketsForUser(@PathVariable final UUID userID) {
+        return ResponseEntity.ok(ticketService.getAllEticketsForUser(userID));
+    }
+        @GetMapping("/adminTickets")
+        public ResponseEntity<List<TicketDTO>> getAllLiveTicketsForAdmin() {
+            return ResponseEntity.ok(ticketService.getAllLiveTicketsForAdmin());
+    }
 }
