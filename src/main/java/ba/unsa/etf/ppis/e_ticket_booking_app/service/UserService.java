@@ -37,6 +37,12 @@ public class UserService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
+    public UserDTO getByEmailAndPassword(final String email, String password) {
+        return userRepository.findByEmail(email)
+                .map(user -> mapToDTO(user, new UserDTO()))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
     public UUID create(final UserDTO userDTO) {
         final User user = new User();
         mapToEntity(userDTO, user);
