@@ -31,9 +31,9 @@ public class ConcertController {
     public ResponseEntity<ConcertDTO> getConcert(@PathVariable final UUID concertID) {
         return ResponseEntity.ok(concertService.get(concertID));
     }
-    @GetMapping("/user")
-    public ResponseEntity<List<ConcertDTO>> getConcertsForUsersBooking(@RequestParam final String id) {
-        return ResponseEntity.ok(concertService.getConcertsForUsersBooking(UUID.fromString(id)));
+    @GetMapping("/user/booking")
+    public ResponseEntity<List<ConcertDTO>> getConcertsForUsersBooking(@RequestParam final String userId, @RequestParam final String bookingId) {
+        return ResponseEntity.ok(concertService.getConcertsForUsersBooking(UUID.fromString(userId), UUID.fromString(bookingId)));
     }
 
     @PostMapping

@@ -10,6 +10,6 @@ import org.springframework.data.repository.query.Param;
 
 
 public interface ConcertRepository extends JpaRepository<Concert, UUID> {
-    @Query(value = "SELECT * FROM concert c, booking b, ticket_booking l, ticket t, type y where b.userid_id =:userID and b.id = l.bookingid_id and l.ticketid_id=t.ticketid and t.concertid_id = c.concertid and t.typeid_id = y.typeid and y.e_ticket=true", nativeQuery = true)
-    List<Concert> getConcertsForUsersBooking(@Param("userID") UUID userID);
+    @Query(value = "SELECT * FROM concert c, booking b, ticket_booking l, ticket t, type y where b.userid_id =:userID and b.id=:bookingID and b.id = l.bookingid_id and l.ticketid_id=t.ticketid and t.concertid_id = c.concertid and t.typeid_id = y.typeid and y.e_ticket=true", nativeQuery = true)
+    List<Concert> getConcertsForUsersBooking(@Param("userID") UUID userID, @Param("bookingID") UUID bookingID);
 }

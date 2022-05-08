@@ -81,8 +81,8 @@ public class ConcertService {
         }
         return concert;
     }
-    public List<ConcertDTO> getConcertsForUsersBooking(UUID id) {
-        return concertRepository.getConcertsForUsersBooking(id)
+    public List<ConcertDTO> getConcertsForUsersBooking(UUID userId, UUID bookinId) {
+        return concertRepository.getConcertsForUsersBooking(userId, bookinId)
                 .stream()
                 .map(concert -> mapToDTO(concert, new ConcertDTO()))
                 .collect(Collectors.toList());
