@@ -42,14 +42,14 @@ public class ETicketBookingAppApplication {
 
             File image = new File("src/main/java/ba/unsa/etf/ppis/e_ticket_booking_app/files/image.jpg");
             FileInputStream img = new FileInputStream(image);
-            MockMultipartFile mltprt = new MockMultipartFile("file", image.getName(), "application/pdf", img);
+            MockMultipartFile mltprt = new MockMultipartFile("file", image.getName(), "image/jpg", img);
             UUID imageID=fileService.create(mltprt);
 
             UUID roleAdmin=roleService.create(new RoleDTO("ADMIN"));
             UUID roleUser=roleService.create(new RoleDTO("USER"));
             // save a few users
-            UUID userId = userService.create(new UserDTO("Admin","Administrator","admin","admin@nesto.com","PasswordFirst!",roleAdmin));
-            UUID adminId = userService.create(new UserDTO("Admin","User","user","user@nesto.com","PasswordSecond!",roleUser));
+            UUID userId = userService.create(new UserDTO("Admin","Administrator","admin","admin@nesto.com","PasswordFirst1!",roleAdmin));
+            UUID adminId = userService.create(new UserDTO("Admin","User","user","user@nesto.com","PasswordSecond2!",roleUser));
 
             UUID typeId = typeService.create(new TypeDTO("V1", 12.4, true));
             UUID concertId = concertService.create(new ConcertDTO("Summer Concert", "Artist", "Sarajevo",imageID, LocalDateTime.of(2023, Month.JANUARY, 1, 10, 10, 30), 100));
