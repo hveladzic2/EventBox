@@ -84,5 +84,11 @@ public class UserService {
         }
         return user;
     }
+    public UserDTO getUserByUsername(final String username) {
+        return mapToDTO(userRepository.getUserByUsername(username),new UserDTO());
+    }
+    public void deleteAll() {
+        userRepository.deleteAll();
+    }
 
 }

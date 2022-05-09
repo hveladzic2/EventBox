@@ -29,11 +29,24 @@ public class UserDTO {
     @Size(max = 255)
     private String email;
 
+    public UserDTO() {
+    }
+
+    public UserDTO(String firstName, String lastName, String username, String email, String password, UUID roleId) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.roleId = roleId;
+    }
+
     @NotNull
     @Size(max = 255)
     private String password;
 
     @NotNull
     private UUID roleId;
+
 
 }

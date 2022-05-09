@@ -20,6 +20,15 @@ public class TypeDTO {
     @NotNull
     private Double price;
 
+    public TypeDTO() {
+    }
+
+    public TypeDTO(String seat, Double price, Boolean eTicket) {
+        this.seat = seat;
+        this.price = price;
+        this.eTicket = eTicket;
+    }
+
     @NotNull
     private Boolean eTicket;
 

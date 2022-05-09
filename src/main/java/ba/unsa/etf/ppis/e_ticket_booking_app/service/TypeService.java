@@ -64,5 +64,8 @@ public class TypeService {
         type.setETicket(typeDTO.getETicket());
         return type;
     }
+    public void deleteAll() {
+        typeRepository.deleteAll();
+    }
 
 }

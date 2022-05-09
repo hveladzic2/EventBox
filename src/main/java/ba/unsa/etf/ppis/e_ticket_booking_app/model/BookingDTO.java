@@ -17,6 +17,20 @@ public class BookingDTO {
     @NotNull
     private LocalDateTime bookingDate;
 
+    public BookingDTO() {
+    }
+
+    public BookingDTO(LocalDateTime bookingDate, String address, String phone, String email, Integer totalNumber, Double totalPrice, UUID userID, UUID bookingFile) {
+        this.bookingDate = bookingDate;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.totalNumber = totalNumber;
+        this.totalPrice = totalPrice;
+        this.userID = userID;
+        this.bookingFile = bookingFile;
+    }
+
     @NotNull
     @Size(max = 255)
     private String address;

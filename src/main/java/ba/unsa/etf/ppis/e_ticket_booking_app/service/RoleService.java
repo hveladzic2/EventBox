@@ -60,5 +60,9 @@ public class RoleService {
         role.setName(roleDTO.getName());
         return role;
     }
+    public void deleteAll()
+    {
+        roleRepository.deleteAll();
+    }
 
 }

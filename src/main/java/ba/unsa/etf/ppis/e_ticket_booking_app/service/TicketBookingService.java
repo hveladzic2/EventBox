@@ -81,5 +81,9 @@ public class TicketBookingService {
         }
         return ticketBooking;
     }
+    public void deleteAll()
+    {
+        ticketBookingRepository.deleteAll();
+    }
 
 }

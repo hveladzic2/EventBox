@@ -94,5 +94,9 @@ public class BookingService {
         }
         return booking;
     }
+    public void deleteAll()
+    {
+        bookingRepository.deleteAll();
+    }
 
 }

@@ -106,5 +106,8 @@ public class TicketService {
                 .collect(Collectors.toList());
         return ticketList;
     }
+    public void deleteAll(){
+        ticketRepository.deleteAll();
+    }
 
 }
