@@ -18,21 +18,16 @@ public class ConcertDTO {
     @Size(max = 255)
     private String name;
 
-    @NotNull
-    @Size(max = 255)
     private String musician;
 
     @NotNull
     @Size(max = 255)
     private String place;
 
-    @NotNull
     private UUID concertFile;
 
-    @NotNull
     private LocalDateTime concertDate;
 
-    @NotNull
     private Integer numberOfTickets;
 
 }

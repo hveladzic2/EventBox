@@ -29,31 +29,31 @@ public class Concert {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String musician;
 
     @Column(nullable = false)
     private String place;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalDateTime concertDate;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Integer numberOfTickets;
 
     @OneToOne
-    @JoinColumn(name = "concert_file_id", nullable = false)
+    @JoinColumn(name = "concert_file_id", nullable = true)
     private File concertFile;
 
     @OneToMany(mappedBy = "concertID")
     private Set<Ticket> concertIDTickets;
 
     @CreatedDate
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = true, updatable = false)
     private OffsetDateTime dateCreated;
 
     @LastModifiedDate
-    @Column(nullable = false)
+    @Column(nullable = true)
     private OffsetDateTime lastUpdated;
 
 }

@@ -50,7 +50,7 @@ public class FileController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteFile(@PathVariable final UUID id) {
         fileService.delete(id);
-        return ResponseEntity.ok("Successfully delated!");
+        return ResponseEntity.ok("Successfully deleted!");
     }
     @DeleteMapping
     public ResponseEntity<String> deleteAll() {

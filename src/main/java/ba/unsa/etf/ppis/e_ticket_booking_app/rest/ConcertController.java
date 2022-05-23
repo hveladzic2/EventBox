@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(value = "/api/concerts", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ConcertController {
 
