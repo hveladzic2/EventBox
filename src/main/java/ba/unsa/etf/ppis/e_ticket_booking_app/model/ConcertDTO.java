@@ -18,16 +18,33 @@ public class ConcertDTO {
     @Size(max = 255)
     private String name;
 
+    public ConcertDTO(String name, String musician, String place, UUID concertFile, LocalDateTime concertDate, Integer numberOfTickets) {
+        this.name = name;
+        this.musician = musician;
+        this.place = place;
+        this.concertFile = concertFile;
+        this.concertDate = concertDate;
+        this.numberOfTickets = numberOfTickets;
+    }
+
+    @NotNull
+    @Size(max = 255)
     private String musician;
+
+    public ConcertDTO() {
+    }
 
     @NotNull
     @Size(max = 255)
     private String place;
 
+    @NotNull
     private UUID concertFile;
 
+    @NotNull
     private LocalDateTime concertDate;
 
+    @NotNull
     private Integer numberOfTickets;
 
 }

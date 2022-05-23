@@ -17,4 +17,10 @@ public class RoleDTO {
     @Size(max = 255)
     private String name;
 
+    public RoleDTO() {
+    }
+
+    public RoleDTO(String name) {
+        this.name = name;
+    }
 }

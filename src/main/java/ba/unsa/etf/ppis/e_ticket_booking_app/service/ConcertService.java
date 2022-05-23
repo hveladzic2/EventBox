@@ -87,4 +87,7 @@ public class ConcertService {
                 .map(concert -> mapToDTO(concert, new ConcertDTO()))
                 .collect(Collectors.toList());
     }
+    public void deleteAll(){
+        concertRepository.deleteAll();
+    }
 }

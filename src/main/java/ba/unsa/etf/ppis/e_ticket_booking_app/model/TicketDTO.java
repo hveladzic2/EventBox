@@ -23,4 +23,12 @@ public class TicketDTO {
     @NotNull
     private UUID concertID;
 
+    public TicketDTO() {
+    }
+
+    public TicketDTO(String serialNumber, UUID typeID, UUID concertID) {
+        this.serialNumber = serialNumber;
+        this.typeID = typeID;
+        this.concertID = concertID;
+    }
 }

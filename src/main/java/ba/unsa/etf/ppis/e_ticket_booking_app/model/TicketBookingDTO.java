@@ -18,4 +18,11 @@ public class TicketBookingDTO {
     @NotNull
     private UUID bookingID;
 
+    public TicketBookingDTO() {
+    }
+
+    public TicketBookingDTO(UUID ticketID, UUID bookingID) {
+        this.ticketID = ticketID;
+        this.bookingID = bookingID;
+    }
 }
