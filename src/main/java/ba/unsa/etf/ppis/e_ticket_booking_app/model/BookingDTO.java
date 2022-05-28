@@ -52,7 +52,6 @@ public class BookingDTO {
     @NotNull
     private UUID userID;
 
-    @NotNull
     private UUID bookingFile;
 
 }

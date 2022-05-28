@@ -88,6 +88,9 @@ public class File {
     @OneToOne(mappedBy = "bookingFile", fetch = FetchType.LAZY)
     private Booking bookingFile;
 
+    @OneToOne(mappedBy = "rezervacijaFile", fetch = FetchType.LAZY)
+    private Rezervacija rezervacijaFile;
+
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private OffsetDateTime dateCreated;

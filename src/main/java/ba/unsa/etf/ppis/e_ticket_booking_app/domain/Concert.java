@@ -48,6 +48,9 @@ public class Concert {
     @OneToMany(mappedBy = "concertID")
     private Set<Ticket> concertIDTickets;
 
+    @OneToMany(mappedBy = "concertID")
+    private Set<Rezervacija> concertIDRezervacija;
+
     @CreatedDate
     @Column(nullable = true, updatable = false)
     private OffsetDateTime dateCreated;

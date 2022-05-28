@@ -56,6 +56,9 @@ public class User {
     @JoinColumn(name = "role_id_id", nullable = false)
     private Role roleId;
 
+    @OneToMany(mappedBy = "userID")
+    private Set<Rezervacija> userIDRezervacija;
+
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private OffsetDateTime dateCreated;

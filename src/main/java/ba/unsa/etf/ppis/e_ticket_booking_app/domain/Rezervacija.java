@@ -1,10 +1,5 @@
 package ba.unsa.etf.ppis.e_ticket_booking_app.domain;
 
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.util.Set;
-import java.util.UUID;
-import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,12 +8,15 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.*;
+import java.time.OffsetDateTime;
+import java.util.UUID;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class Booking {
+public class Rezervacija {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -26,34 +24,20 @@ public class Booking {
     @GeneratedValue(generator = "uuid")
     private UUID id;
 
-    @Column(nullable = false)
-    private LocalDateTime bookingDate;
+    @Column(nullable = true)
+    private Boolean eTicket;
 
-    @Column(nullable = false)
-    private String address;
-
-    @Column(nullable = false)
-    private String phone;
-
-    @Column(nullable = false)
-    private String email;
-
-    @Column(nullable = false)
-    private Integer totalNumber;
-
-    @Column(nullable = false)
-    private Double totalPrice;
-
-    @OneToMany(mappedBy = "bookingID")
-    private Set<TicketBooking> bookingIDTicketBookings;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "concertid_id", nullable = false)
+    private Concert concertID;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userid_id", nullable = false)
     private User userID;
 
     @OneToOne
-    @JoinColumn(name = "booking_file_id", nullable = true)
-    private File bookingFile;
+    @JoinColumn(name = "rezervacija_file_id", nullable = true)
+    private File rezervacijaFile;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -64,3 +48,4 @@ public class Booking {
     private OffsetDateTime lastUpdated;
 
 }
+

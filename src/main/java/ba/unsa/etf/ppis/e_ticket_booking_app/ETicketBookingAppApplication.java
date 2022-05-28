@@ -1,7 +1,11 @@
 package ba.unsa.etf.ppis.e_ticket_booking_app;
 
+import ba.unsa.etf.ppis.e_ticket_booking_app.domain.Concert;
+import ba.unsa.etf.ppis.e_ticket_booking_app.domain.Ticket;
+import ba.unsa.etf.ppis.e_ticket_booking_app.domain.Type;
+import ba.unsa.etf.ppis.e_ticket_booking_app.domain.User;
 import ba.unsa.etf.ppis.e_ticket_booking_app.model.*;
-import ba.unsa.etf.ppis.e_ticket_booking_app.repos.FileRepository;
+import ba.unsa.etf.ppis.e_ticket_booking_app.repos.*;
 import ba.unsa.etf.ppis.e_ticket_booking_app.service.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,7 +18,15 @@ import java.io.FileInputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.List;
 import java.util.UUID;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 
 
 @SpringBootApplication
@@ -24,9 +36,11 @@ public class ETicketBookingAppApplication {
         SpringApplication.run(ETicketBookingAppApplication.class, args);
     }
     @Bean
-    public CommandLineRunner demo(FileRepository fileRepository, RoleService roleService, UserService userService, ConcertService concertService, FileService fileService, TypeService typeService, TicketService ticketService, TicketBookingService ticketBookingService, BookingService bookingService) {
+    public CommandLineRunner demo(RezervacijaRepository rezervacijaRepository, RezervacijaService rezervacijaService, FileRepository fileRepository, RoleService roleService, UserService userService, ConcertService concertService, FileService fileService, TypeService typeService, TicketService ticketService, TicketBookingService ticketBookingService, BookingService bookingService) {
         return (args) -> {
+
             ticketBookingService.deleteAll();
+            rezervacijaRepository.deleteAll();
             bookingService.deleteAll();
             ticketService.deleteAll();
             concertService.deleteAll();
@@ -34,6 +48,7 @@ public class ETicketBookingAppApplication {
             userService.deleteAll();
             roleService.deleteAll();
             fileRepository.deleteAll();
+
 
             File file = new File("src/main/java/ba/unsa/etf/ppis/e_ticket_booking_app/files/demo.pdf");
             FileInputStream fis = new FileInputStream(file);
@@ -48,14 +63,15 @@ public class ETicketBookingAppApplication {
             UUID roleAdmin=roleService.create(new RoleDTO("ADMIN"));
             UUID roleUser=roleService.create(new RoleDTO("USER"));
             // save a few users
-            UUID userId = userService.create(new UserDTO("Admin","Administrator","admin","admin@nesto.com","PasswordFirst1!",roleAdmin));
-            UUID adminId = userService.create(new UserDTO("Admin","User","user","user@nesto.com","PasswordSecond2!",roleUser));
+            UUID adminId = userService.create(new UserDTO("Admin","Admin","admin","admin@nesto.com","PasswordFirst1!",roleAdmin));
+            UUID userId = userService.create(new UserDTO("User","User","user","user@nesto.com","PasswordSecond2!",roleUser));
 
-            UUID typeId = typeService.create(new TypeDTO("V1", 12.4, true));
-            UUID concertId = concertService.create(new ConcertDTO("Summer Concert", "Artist", "Sarajevo",imageID, LocalDateTime.of(2023, Month.JANUARY, 1, 10, 10, 30), 100));
-            UUID ticketId = ticketService.create(new TicketDTO("MM-123-Abfnsj-11", typeId, concertId));
-            UUID bookingId = bookingService.create(new BookingDTO(LocalDateTime.now(), "Adresa bb", "033133133", "user@gmail.com", 2, 2.5, userId, fileID));
-            UUID ticketBookingId = ticketBookingService.create(new TicketBookingDTO(ticketId, bookingId));
+//            UUID typeId = typeService.create(new TypeDTO("V1", 12.4, true));
+            UUID concertId = concertService.create(new ConcertDTO("Summer Concert", "Artist", "Sarajevo",imageID, LocalDateTime.of(2023, Month.JANUARY, 1, 10, 30, 00), 100));
+//            UUID ticketId = ticketService.create(new TicketDTO("MM-123-Abfnsj-11", typeId, concertId));
+//            UUID bookingId = bookingService.create(new BookingDTO(LocalDateTime.now(), "Adresa bb", "033133133", "user@gmail.com", 2, 2.5, userId, fileID));
+//            UUID ticketBookingId = ticketBookingService.create(new TicketBookingDTO(ticketId, bookingId));
+            rezervacijaService.create(new RezervacijaDTO(concertId, userId, true));
         };
     }
 }
