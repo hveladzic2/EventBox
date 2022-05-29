@@ -46,14 +46,14 @@ public class User {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String password;
 
     @OneToMany(mappedBy = "userID")
     private Set<Booking> userIDBookings;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id_id", nullable = false)
+    @JoinColumn(name = "role_id_id", nullable = true)
     private Role roleId;
 
     @OneToMany(mappedBy = "userID")

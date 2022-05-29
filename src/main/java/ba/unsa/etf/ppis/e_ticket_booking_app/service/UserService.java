@@ -77,11 +77,15 @@ public class UserService {
         user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword());
-        if (userDTO.getRoleId() != null && (user.getRoleId() == null || !user.getRoleId().getRoleID().equals(userDTO.getRoleId()))) {
-            final Role roleId = roleRepository.findById(userDTO.getRoleId())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "roleId not found"));
-            user.setRoleId(roleId);
+        final Role role;
+        if (userDTO.getRoleId()==null){
+            role = roleRepository.findByName("USER");
         }
+        else {
+            role = roleRepository.findById(userDTO.getRoleId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "role not found"));
+        }
+        user.setRoleId(role);
         return user;
     }
     public UserDTO getUserByUsername(final String username) {
