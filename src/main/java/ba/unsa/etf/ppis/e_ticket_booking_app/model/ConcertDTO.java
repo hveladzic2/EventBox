@@ -34,6 +34,8 @@ public class ConcertDTO {
     public ConcertDTO() {
     }
 
+    private FileDTO fileDTO;
+
     @NotNull
     @Size(max = 255)
     private String place;

@@ -9,6 +9,7 @@ import ba.unsa.etf.ppis.e_ticket_booking_app.repos.*;
 import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.UUID;
@@ -91,6 +92,13 @@ public class RezervacijaService {
         rezervacijaDTO.setConcertID(rezervacija.getConcertID() == null ? null : rezervacija.getConcertID().getConcertID());
         rezervacijaDTO.setUserID(rezervacija.getUserID() == null ? null : rezervacija.getUserID().getUserID());
         rezervacijaDTO.setFileID(rezervacija.getRezervacijaFile() == null ? null : rezervacija.getRezervacijaFile().getId());
+        rezervacijaDTO.setUserDTO(rezervacija.getUserID() == null ? null : userService.get(rezervacija.getUserID().getUserID()));
+        rezervacijaDTO.setConcertDTO(rezervacija.getConcertID() == null ? null : concertService.get(rezervacija.getConcertID().getConcertID()));
+        try {
+            rezervacijaDTO.setFileDTO(rezervacija.getRezervacijaFile() == null ? null : fileService.get(rezervacija.getRezervacijaFile().getId()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         rezervacijaDTO.setETicket(rezervacija.getETicket());
         return rezervacijaDTO;
     }
@@ -104,7 +112,7 @@ public class RezervacijaService {
         }
         if (rezervacijaDTO.getUserID() != null && (rezervacija.getUserID() == null || !rezervacija.getUserID().getUserID().equals(rezervacijaDTO.getUserID()))) {
             final User userID = userRepository.findById(rezervacijaDTO.getUserID())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "bookingID not found"));
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "userID not found"));
             rezervacija.setUserID(userID);
         }
         if (rezervacijaDTO.getFileID() != null && (rezervacija.getRezervacijaFile() == null || !rezervacija.getRezervacijaFile().getId().equals(rezervacijaDTO.getFileID()))) {

@@ -18,6 +18,12 @@ public class RezervacijaDTO {
     @NotNull
     private UUID userID;
 
+    private UserDTO userDTO;
+
+    private ConcertDTO concertDTO;
+
+    private FileDTO fileDTO;
+
     private UUID fileID;
 
     private boolean eTicket;
