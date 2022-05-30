@@ -62,6 +62,8 @@ public class ConcertService {
         concertDTO.setName(concert.getName());
         concertDTO.setMusician(concert.getMusician());
         concertDTO.setPlace(concert.getPlace());
+        concertDTO.setPrice(concert.getPrice());
+        concertDTO.setDescription(concert.getDescription());
         concertDTO.setConcertDate(concert.getConcertDate());
         concertDTO.setNumberOfTickets(concert.getNumberOfTickets());
         concertDTO.setConcertFile(concert.getConcertFile() == null ? null : concert.getConcertFile().getId());
@@ -72,6 +74,8 @@ public class ConcertService {
         concert.setName(concertDTO.getName());
         concert.setMusician(concertDTO.getMusician());
         concert.setPlace(concertDTO.getPlace());
+        concert.setPrice(concertDTO.getPrice());
+        concert.setDescription(concertDTO.getDescription());
         concert.setConcertDate(concertDTO.getConcertDate());
         concert.setNumberOfTickets(concertDTO.getNumberOfTickets());
         if (concertDTO.getConcertFile() != null && (concert.getConcertFile() == null || !concert.getConcertFile().getId().equals(concertDTO.getConcertFile()))) {

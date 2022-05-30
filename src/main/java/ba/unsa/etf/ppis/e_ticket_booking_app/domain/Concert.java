@@ -29,8 +29,14 @@ public class Concert {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
+    private Integer price;
+
     @Column(nullable = true)
     private String musician;
+
+    @Column(nullable = true)
+    private String description;
 
     @Column(nullable = false)
     private String place;
