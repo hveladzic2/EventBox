@@ -104,7 +104,7 @@ public class RezervacijaService {
         }
         if (rezervacijaDTO.getUserID() != null && (rezervacija.getUserID() == null || !rezervacija.getUserID().getUserID().equals(rezervacijaDTO.getUserID()))) {
             final User userID = userRepository.findById(rezervacijaDTO.getUserID())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "bookingID not found"));
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "userId not found"));
             rezervacija.setUserID(userID);
         }
         if (rezervacijaDTO.getFileID() != null && (rezervacija.getRezervacijaFile() == null || !rezervacija.getRezervacijaFile().getId().equals(rezervacijaDTO.getFileID()))) {

@@ -63,7 +63,7 @@ public class ETicketBookingAppApplication {
             UUID roleAdmin=roleService.create(new RoleDTO("ADMIN"));
             UUID roleUser=roleService.create(new RoleDTO("USER"));
             // save a few users
-            UUID adminId = userService.create(new UserDTO("Admin","Admin","admin","admin@nesto.com","PasswordFirst1!",roleAdmin));
+            UUID adminId = userService.create(new UserDTO("admin","admin","admin","admin@nesto.com","PasswordFirst1!",roleAdmin));
             UUID userId = userService.create(new UserDTO("User","User","user","user@nesto.com","PasswordSecond2!",roleUser));
 
 //            UUID typeId = typeService.create(new TypeDTO("V1", 12.4, true));

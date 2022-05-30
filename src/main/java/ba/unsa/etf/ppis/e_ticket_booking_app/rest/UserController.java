@@ -1,5 +1,6 @@
 package ba.unsa.etf.ppis.e_ticket_booking_app.rest;
 
+import ba.unsa.etf.ppis.e_ticket_booking_app.model.MeRequestBody;
 import ba.unsa.etf.ppis.e_ticket_booking_app.model.UserDTO;
 import ba.unsa.etf.ppis.e_ticket_booking_app.service.UserService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -35,9 +36,9 @@ public class UserController {
 
 
 
-    @GetMapping("/me/{email}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable final String email) {
-        return ResponseEntity.ok(userService.getByEmailAndPassword(email, "nasiha"));
+    @PostMapping("/me/{email}")
+    public ResponseEntity<UserDTO> getUser(@PathVariable final String email, @RequestBody @Valid final MeRequestBody meRequestBody) {
+        return ResponseEntity.ok(userService.getByEmailAndPassword(email, meRequestBody.getPassword()));
     }
 
     @PostMapping
