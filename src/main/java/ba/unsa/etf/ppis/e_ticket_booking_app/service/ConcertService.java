@@ -4,6 +4,8 @@ import ba.unsa.etf.ppis.e_ticket_booking_app.domain.Concert;
 import ba.unsa.etf.ppis.e_ticket_booking_app.domain.File;
 import ba.unsa.etf.ppis.e_ticket_booking_app.model.ConcertDTO;
 import ba.unsa.etf.ppis.e_ticket_booking_app.repos.ConcertRepository;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -19,12 +21,14 @@ import org.springframework.web.server.ResponseStatusException;
 public class ConcertService {
 
     private final ConcertRepository concertRepository;
+    private final FileService fileService;
     @Autowired
     private final FileRepository fileRepository;
 
-    public ConcertService(final ConcertRepository concertRepository, final FileRepository fileRepository) {
+    public ConcertService(final ConcertRepository concertRepository, final FileRepository fileRepository, final FileService fileService) {
         this.concertRepository = concertRepository;
         this.fileRepository = fileRepository;
+        this.fileService = fileService;
     }
 
     public List<ConcertDTO> findAll() {
@@ -62,9 +66,16 @@ public class ConcertService {
         concertDTO.setName(concert.getName());
         concertDTO.setMusician(concert.getMusician());
         concertDTO.setPlace(concert.getPlace());
+        concertDTO.setPrice(concert.getPrice());
+        concertDTO.setDescription(concert.getDescription());
         concertDTO.setConcertDate(concert.getConcertDate());
         concertDTO.setNumberOfTickets(concert.getNumberOfTickets());
-        concertDTO.setConcertFile(concert.getConcertFile() == null ? null : concert.getConcertFile().getId());
+        try {
+            concertDTO.setFileDTO(concert.getConcertFile() == null ? null : fileService.get(concert.getConcertFile().getId()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+       // concertDTO.setConcertFile(concert.getConcertFile() == null ? null : concert.getConcertFile().getId());
         return concertDTO;
     }
 
@@ -72,6 +83,8 @@ public class ConcertService {
         concert.setName(concertDTO.getName());
         concert.setMusician(concertDTO.getMusician());
         concert.setPlace(concertDTO.getPlace());
+        concert.setPrice(concertDTO.getPrice());
+        concert.setDescription(concertDTO.getDescription());
         concert.setConcertDate(concertDTO.getConcertDate());
         concert.setNumberOfTickets(concertDTO.getNumberOfTickets());
         if (concertDTO.getConcertFile() != null && (concert.getConcertFile() == null || !concert.getConcertFile().getId().equals(concertDTO.getConcertFile()))) {

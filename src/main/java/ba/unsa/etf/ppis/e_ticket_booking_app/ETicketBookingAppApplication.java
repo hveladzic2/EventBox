@@ -67,7 +67,7 @@ public class ETicketBookingAppApplication {
             UUID userId = userService.create(new UserDTO("User","User","user","user@nesto.com","PasswordSecond2!",roleUser));
 
 //            UUID typeId = typeService.create(new TypeDTO("V1", 12.4, true));
-            UUID concertId = concertService.create(new ConcertDTO("Summer Concert", "Artist", "Sarajevo",imageID, LocalDateTime.of(2023, Month.JANUARY, 1, 10, 30, 00), 100));
+            UUID concertId = concertService.create(new ConcertDTO("Summer Concert", "Artist", "Sarajevo",imageID, LocalDateTime.of(2023, Month.JANUARY, 1, 10, 30, 00), 100,1000,"Summer nights in the Sarajevo"));
 //            UUID ticketId = ticketService.create(new TicketDTO("MM-123-Abfnsj-11", typeId, concertId));
 //            UUID bookingId = bookingService.create(new BookingDTO(LocalDateTime.now(), "Adresa bb", "033133133", "user@gmail.com", 2, 2.5, userId, fileID));
 //            UUID ticketBookingId = ticketBookingService.create(new TicketBookingDTO(ticketId, bookingId));
