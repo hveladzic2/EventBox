@@ -1,5 +1,6 @@
 package ba.unsa.etf.ppis.e_ticket_booking_app.rest;
 
+import ba.unsa.etf.ppis.e_ticket_booking_app.model.ConcertDTO;
 import ba.unsa.etf.ppis.e_ticket_booking_app.model.RezervacijaDTO;
 import ba.unsa.etf.ppis.e_ticket_booking_app.service.RezervacijaService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -31,6 +32,11 @@ public class RezervacijaController {
     @GetMapping("/{id}")
     public ResponseEntity<RezervacijaDTO> getRezervacija(@PathVariable final UUID id) {
         return ResponseEntity.ok(rezervacijaService.get(id));
+    }
+    // http://localhost:8080/api/rezervacije/user?userID=xxx
+    @GetMapping("/user")
+    public ResponseEntity<List<RezervacijaDTO>> getRezervacijeForUser(@RequestParam final String userID) {
+        return ResponseEntity.ok(rezervacijaService.getRezervacijeForUser(UUID.fromString(userID)));
     }
 
     @PostMapping

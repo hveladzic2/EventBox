@@ -50,6 +50,13 @@ public class RezervacijaService {
         this.concertService = concertService;
     }
 
+    public List<RezervacijaDTO> getRezervacijeForUser(UUID userID) {
+        return rezervacijaRepository.getRezervacijeForUser(userID)
+                .stream()
+                .map(rezervacija -> mapToDTO(rezervacija, new RezervacijaDTO()))
+                .collect(Collectors.toList());
+    }
+
     public List<RezervacijaDTO> findAll() {
         return rezervacijaRepository.findAll()
                 .stream()
