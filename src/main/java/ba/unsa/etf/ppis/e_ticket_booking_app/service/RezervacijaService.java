@@ -57,6 +57,27 @@ public class RezervacijaService {
                 .collect(Collectors.toList());
     }
 
+    public List<RezervacijaDTO> getERezervacijeForUser(UUID userID) {
+        return rezervacijaRepository.getERezervacijeForUser(userID)
+                .stream()
+                .map(rezervacija -> mapToDTO(rezervacija, new RezervacijaDTO()))
+                .collect(Collectors.toList());
+    }
+
+    public List<RezervacijaDTO> rezervacijeWithEticket() {
+        return rezervacijaRepository.rezervacijeWithEticket()
+                .stream()
+                .map(rezervacija -> mapToDTO(rezervacija, new RezervacijaDTO()))
+                .collect(Collectors.toList());
+    }
+
+    public List<RezervacijaDTO> toNotify() {
+        return rezervacijaRepository.toNotify()
+                .stream()
+                .map(rezervacija -> mapToDTO(rezervacija, new RezervacijaDTO()))
+                .collect(Collectors.toList());
+    }
+
     public List<RezervacijaDTO> findAll() {
         return rezervacijaRepository.findAll()
                 .stream()

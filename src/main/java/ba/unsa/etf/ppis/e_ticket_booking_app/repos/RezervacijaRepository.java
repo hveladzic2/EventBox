@@ -12,5 +12,14 @@ import java.util.UUID;
 public interface RezervacijaRepository extends JpaRepository<Rezervacija, UUID> {
     @Query(value = "SELECT * FROM rezervacija r where r.userid_id =:userID", nativeQuery = true)
     List<Rezervacija> getRezervacijeForUser(@Param("userID") UUID userID);
+
+    @Query(value = "SELECT * FROM rezervacija r where r.userid_id =:userID and r.e_ticket = true", nativeQuery = true)
+    List<Rezervacija> getERezervacijeForUser(@Param("userID") UUID userID);
+
+    @Query(value = "SELECT * FROM rezervacija WHERE e_ticket = true", nativeQuery = true)
+    List<Rezervacija> rezervacijeWithEticket();
+
+    @Query(value = "SELECT * FROM rezervacija WHERE e_ticket = false", nativeQuery = true)
+    List<Rezervacija> toNotify();
 }
 

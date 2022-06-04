@@ -33,6 +33,22 @@ public class RezervacijaController {
     public ResponseEntity<RezervacijaDTO> getRezervacija(@PathVariable final UUID id) {
         return ResponseEntity.ok(rezervacijaService.get(id));
     }
+
+    @GetMapping("/eTicket")
+    public ResponseEntity<List<RezervacijaDTO>> rezervacijeWithEticket() {
+        return ResponseEntity.ok(rezervacijaService.rezervacijeWithEticket());
+    }
+
+    @GetMapping("/toNotify")
+    public ResponseEntity<List<RezervacijaDTO>> toNotify() {
+        return ResponseEntity.ok(rezervacijaService.toNotify());
+    }
+    // http://localhost:8080/api/rezervacije/eRezervacije/user?userID=xxx
+    @GetMapping("/eRezervacije/user")
+    public ResponseEntity<List<RezervacijaDTO>> getERezervacijeForUser(@RequestParam final String userID) {
+        return ResponseEntity.ok(rezervacijaService.getERezervacijeForUser(UUID.fromString(userID)));
+    }
+
     // http://localhost:8080/api/rezervacije/user?userID=xxx
     @GetMapping("/user")
     public ResponseEntity<List<RezervacijaDTO>> getRezervacijeForUser(@RequestParam final String userID) {
