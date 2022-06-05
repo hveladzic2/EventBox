@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import ba.unsa.etf.ppis.e_ticket_booking_app.model.FileDTO;
+import ba.unsa.etf.ppis.e_ticket_booking_app.model.RezervacijaDTO;
 import ba.unsa.etf.ppis.e_ticket_booking_app.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(value = "/api/files", produces = MediaType.APPLICATION_JSON_VALUE)
 public class FileController {
 
@@ -33,6 +35,10 @@ public class FileController {
     @GetMapping("/{id}")
     public ResponseEntity<FileDTO> getFile(@PathVariable final UUID id) throws IOException {
         return ResponseEntity.ok(fileService.get(id));
+    }
+    @PostMapping(value = "/uploadFile", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<FileDTO> uploadFileAndGetFile(@RequestPart("file") MultipartFile file) throws IOException {
+        return new ResponseEntity<>(fileService.uploadFileAndGetFile(file), HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/upload", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})

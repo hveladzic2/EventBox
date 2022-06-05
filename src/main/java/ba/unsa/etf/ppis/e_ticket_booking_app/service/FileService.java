@@ -15,7 +15,9 @@ import ba.unsa.etf.ppis.e_ticket_booking_app.model.FileDTO;
 import ba.unsa.etf.ppis.e_ticket_booking_app.repos.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -118,6 +120,12 @@ public class FileService {
         } catch (DataFormatException e) {
         }
         return outputStream.toByteArray();
+    }
+
+    public FileDTO uploadFileAndGetFile(MultipartFile file) throws IOException {
+        UUID newFile = create(file);
+        FileDTO getFile = get(newFile);
+        return getFile;
     }
 
 }
